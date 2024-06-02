@@ -6,6 +6,17 @@ import requests
 
 bot = commands.Bot(command_prefix="?", intents=discord.Intents.all())
 
+@bot.command()
+async def ping(ctx):
+    raw_ping = bot.latency
+    ping = round(raw_ping * 1000)
+    await ctx.reply(f"BotのPing値は{ping}msです。")
+
+@bot.event
+async def on_ready():
+    print("botが正常に起動しました！")
+    await bot.change_presence(activity=discord.Game(name="VER:2.4"))
+
 #?bw
 @bot.command()
 async def bw(ctx):
@@ -40,7 +51,7 @@ async def Hypixel(ctx):
     await ctx.send(
         "@here みんなーBEDWARSの募集がかけられてるよーーみんなVCに集まれーー"
     )
-
+    
 #?hp
 @bot.command()
 async def hp(ctx):
@@ -98,7 +109,76 @@ async def on_interaction(interaction: discord.Interaction):
                     "Ver2.0 Changelog: コードを変更しました", 
                     ephemeral=True
                 )
+            if interaction.data["custom_id"] == "たぬ鯖":
+                await interaction.response.send_message(
+                    "**tms.vgg.jp**", 
+                    ephemeral=True
+                )
+            if interaction.data["custom_id"] == "みい鯖":
+                await interaction.response.send_message(
+                    "**mii0516.aternos.me**", 
+                    ephemeral=True
+                )
+            if interaction.data["custom_id"] == "yone鯖":
+                await interaction.response.send_message(
+                    "**yoneserver.f5.si**", 
+                    ephemeral=True
+                )
     except KeyError:
         pass
 
-bot.run("0000000000000")
+#?server
+@bot.command()
+async def server(ctx):
+    view = discord.ui.View()
+    view.add_item(
+        discord.ui.Button(
+            label="タヌ鯖",
+            style=discord.ButtonStyle.blurple,
+            custom_id="たぬ鯖"
+        )
+    )
+    view.add_item(
+        discord.ui.Button(
+            label="みい鯖",
+            style=discord.ButtonStyle.blurple,
+            custom_id="みい鯖"
+        )
+    )
+    view.add_item(
+        discord.ui.Button(
+            label="yone鯖",
+            style=discord.ButtonStyle.primary,
+            custom_id="yone鯖"
+        )
+    )
+    await ctx.send("知りたいipのクリックしてね!", view=view)
+
+#?s
+@bot.command()
+async def s(ctx):
+    view = discord.ui.View()
+    view.add_item(
+        discord.ui.Button(
+            label="タヌ鯖",
+            style=discord.ButtonStyle.blurple,
+            custom_id="たぬ鯖"
+        )
+    )
+    view.add_item(
+        discord.ui.Button(
+            label="みい鯖",
+            style=discord.ButtonStyle.blurple,
+            custom_id="みい鯖"
+        )
+    )
+    view.add_item(
+        discord.ui.Button(
+            label="yone鯖",
+            style=discord.ButtonStyle.primary,
+            custom_id="yone鯖"
+        )
+    )
+    await ctx.send("知りたいipのクリックしてね!", view=view)
+
+bot.run("0000000000000000000")
